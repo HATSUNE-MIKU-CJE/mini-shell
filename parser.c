@@ -14,8 +14,14 @@ int parser(char buffer[],struct command *cmds)
     token   = strtok(buffer,s);
     while (token != NULL)
     {
-        if (i>=4095)
+        if (i>=MAX_ARGS-1)
         {break;}
+        if (strcmp(token,"&") ==0)
+        {
+            cmds[j].background = 1;
+            token = strtok(NULL,s);
+            continue;
+        }
         if (strcmp(token,">>")==0)
         {
             cmds[j].append   = 1;

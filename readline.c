@@ -1,5 +1,8 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <string.h>
+#include "readline.h"
 
 #define HISTORY_MAX 128
 
@@ -39,5 +42,7 @@ int history_size(void)
 
 char *history_get(int index)
 {
+    if (index < 0 || index >= history_count)
+    {return NULL;}
     return history[index];
 }

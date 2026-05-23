@@ -6,9 +6,10 @@
 
 int builtin(char *cmd_name,char **args)
 {
+    char *home = getenv("HOME");
     if (strcmp(cmd_name,"cd")==0)
     {
-        args[1] ? chdir(args[1]) : chdir(getenv("HOME"));
+        args[1] ? chdir(args[1]) : chdir(home?home:"/");
         return 0;
     }
     else if (strcmp(cmd_name,"exit")==0) 
@@ -20,7 +21,11 @@ int builtin(char *cmd_name,char **args)
     else if (strcmp(cmd_name,"pwd")==0)
     {
         char buf[4096];
-        getcwd(buf,sizeof(buf));
+        if (getcwd(buf,sizeof(buf)) == NULL)
+        {
+            perror("pwd");
+            return -1;
+        }
         printf("%s\n",buf);
         return 0;
     }

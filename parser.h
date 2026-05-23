@@ -10,6 +10,7 @@ struct command
     char *in_file;
     char *out_file;
     int append;
+    int background;
 };
 
 int parser(char buffer[],struct command *cmds);
