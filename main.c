@@ -14,11 +14,13 @@
 volatile pid_t foreground_pids[MAX_CMDS];
 volatile int fg_count = 0;
 
+/*
 void sigchld_handler(int sig)
 {
     while (waitpid(-1,NULL,WNOHANG)>0)
     {;}
 }
+*/
 
 void sigint_handler(int sig)
 {
@@ -30,15 +32,15 @@ void sigint_handler(int sig)
 
 int main()
 {
-    struct sigaction sa;
+    //struct sigaction sa;
     struct sigaction sb;
-    sa.sa_handler = sigchld_handler;
+    //sa.sa_handler = sigchld_handler;
     sb.sa_handler = sigint_handler;
-    sa.sa_flags = SA_RESTART;
+    //sa.sa_flags = SA_RESTART;
     sb.sa_flags = SA_RESTART;
-    sigemptyset(&sa.sa_mask);
+    //sigemptyset(&sa.sa_mask);
     sigemptyset(&sb.sa_mask);
-    sigaction(SIGCHLD,&sa,NULL);
+    //sigaction(SIGCHLD,&sa,NULL);
     sigaction(SIGINT ,&sb,NULL);
     
     char instruction[4096]={0};
