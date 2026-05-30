@@ -103,12 +103,21 @@ int executor(struct command *cmd,int n)
         {
             foreground_pids[l] = pids[l];
         }
+       
         fg_count = n;
         for (int j=0;j<n;j++)
         {
-            waitpid(-1,&status,0);
+            //waitpid(-1,&status,0);
+            waitpid(pids[j], &status, 0);
+            if (WIFEXITED(status)) {
+                printf("[pid %d] exited with status %d\n", pids[j], WEXITSTATUS(status));
+            }
+            if (WIFSIGNALED(status)) {
+                printf("[pid %d] killed by signal %d\n", pids[j], WTERMSIG(status));
+            }
         }
         fg_count = 0;
+
     }
     return 0;
 } 
